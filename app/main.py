@@ -25,7 +25,18 @@ logger = get_logger("cloud_detection_app")
 app = FastAPI(title="Cloud Detection Lab App", version="1.0.0")
 
 # Middleware for request_id + structured request logs
-app.add_middleware(RequestContextMiddleware, logger=logger)
+# app.add_middleware(RequestContextMiddleware, logger=logger)
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],#["http://localhost:5173"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 
 @app.on_event("startup")

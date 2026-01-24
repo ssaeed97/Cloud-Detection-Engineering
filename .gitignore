@@ -1,6 +1,52 @@
-app.db
+####################################
+# Python / FastAPI
+####################################
 __pycache__/
-app/venv/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+
+# virtual environments
+.venv/
+venv/
+env/
+
+# Python tooling
+.pytest_cache/
+.mypy_cache/
+
+####################################
+# App secrets / local state
+####################################
+app/.env
+app/app.db
+app/uploads/
+
+####################################
+# Node / React / Vite
+####################################
+node_modules/
+dist/
+build/
+.vite/
+
+# local env files
+web/.env
+web/.env.local
+web/.env.development
+web/.env.production
+
+####################################
+# Logs
+####################################
+*.log
+
+####################################
+# OS / Editor junk
+####################################
 .DS_Store
-.env
+.idea/
+.vscode/
+*.swp
