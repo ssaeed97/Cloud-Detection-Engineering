@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../api/client";
 import { Guard } from "../components/Guard";
+import NoteDetails from "../components/NoteDetails";
+
 
 type Note = { id: number; title: string; body: string; tenant_id: number; owner_user_id: number };
 
@@ -59,19 +61,7 @@ export default function Notes() {
       <div className="card">
         <h3>Recent notes</h3>
         {showDetails && selectedId !== null && (
-          <div className="card">
-            <div className="row">
-              <div className="col">
-                {/* <div className="small">Selected note id: {selectedId}</div> */}
-                <div className="small">Selected note ID: {selectedId} </div>
-                <div className="small"> Tenant ID: {notes.find(n => n.id === selectedId)?.tenant_id} </div>
-                <div className="small"> Owner ID:{notes.find(n => n.id === selectedId)?.owner_user_id}</div>
-              </div>
-              <div className="col">
-                <button onClick={() => setShowDetails(false)}>Close details</button>
-              </div>
-            </div>
-
+          <div className="card" style={{ marginTop: 12 }}>
             <label className="small">
               <input
                 type="checkbox"
@@ -80,7 +70,17 @@ export default function Notes() {
               />
               Use legacy mode
             </label>
+
+            <NoteDetails
+              noteId={selectedId}
+              useLegacy={useLegacy}
+              onClose={() => {
+                setShowDetails(false);
+                setUseLegacy(false);
+              }}
+            />
           </div>
+          
         )}
         {notes.length === 0 ? (
           <div className="small">No notes yet.</div>
@@ -92,8 +92,13 @@ export default function Notes() {
               <div style={{ opacity: 0.9 }}>{n.body}</div>
               <button
                 onClick={() => {
-                  setSelectedId(n.id);
-                  setShowDetails(true);
+                  if (showDetails && selectedId === n.id) {
+                    setShowDetails(false);
+                    setUseLegacy(false);
+                  } else {
+                    setSelectedId(n.id);
+                    setShowDetails(true);
+                  }
                 }}
               >
                 View details
