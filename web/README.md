@@ -22,6 +22,7 @@ It is **not** a full production UI by design.
 
 ## Project Structure
 
+```text
 web/
 ├── index.html # Single HTML entry point
 ├── src/
@@ -41,6 +42,7 @@ web/
 │ └── styles.css # Global styles
 ├── vite-env.d.ts # Vite environment typing
 └── .env.example # Example environment config
+```
 
 ---
 
