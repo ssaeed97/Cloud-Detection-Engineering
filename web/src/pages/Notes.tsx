@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../api/client";
 import { Guard } from "../components/Guard";
+import NoteDetails from "../components/NoteDetails";
+import SessionInspector from "../components/SessionInspector";
+import { clearToken } from "../auth/token";
+
+
 
 type Note = { id: number; title: string; body: string; tenant_id: number; owner_user_id: number };
 
@@ -11,6 +16,11 @@ export default function Notes() {
   const [err, setErr] = useState<string | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
 
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [showDetails, setShowDetails] = useState(false);
+  const [useLegacy, setUseLegacy] = useState(false);
+
+
   async function refresh() {
     setErr(null);
     const data = await api<Note[]>({ method: "GET", path: "/notes", auth: true });
@@ -19,7 +29,7 @@ export default function Notes() {
 
   async function create() {
     setErr(null); setMsg(null);
-    const n = await api<Note>({ method: "POST", path: "/notes", body: { title, body }, auth: true });
+    const n = await api<Note>({ method: "POST", path: "/notes", body: { title, body }, auth: true }); 
     setMsg(`Created note id=${n.id}`);
     await refresh();
   }
@@ -28,6 +38,14 @@ export default function Notes() {
 
   return (
     <Guard>
+      <SessionInspector
+        onLogout={() => {
+          clearToken();
+          // optional: force UI change by reloading or routing; simplest:
+          window.location.reload();
+        }}
+      />
+
       <div className="card">
         <h2>Notes</h2>
 
@@ -53,14 +71,50 @@ export default function Notes() {
 
       <div className="card">
         <h3>Recent notes</h3>
+        {showDetails && selectedId !== null && (
+          <div className="card" style={{ marginTop: 12 }}>
+            <label className="small">
+              <input
+                type="checkbox"
+                checked={useLegacy}
+                onChange={(e) => setUseLegacy(e.target.checked)}
+              />
+              Use legacy mode
+            </label>
+
+            <NoteDetails
+              noteId={selectedId}
+              useLegacy={useLegacy}
+              onClose={() => {
+                setShowDetails(false);
+                setUseLegacy(false);
+              }}
+            />
+          </div>
+          
+        )}
         {notes.length === 0 ? (
           <div className="small">No notes yet.</div>
         ) : (
           notes.map((n) => (
             <div key={n.id} className="card" style={{ background: "#0f1626" }}>
-              <div className="small">id={n.id} tenant={n.tenant_id} owner={n.owner_user_id}</div>
+              {/* <div className="small">id={n.id} tenant={n.tenant_id} owner={n.owner_user_id}</div> */}
               <div style={{ fontWeight: 600 }}>{n.title}</div>
               <div style={{ opacity: 0.9 }}>{n.body}</div>
+              <button
+                onClick={() => {
+                  if (showDetails && selectedId === n.id) {
+                    setShowDetails(false);
+                    setUseLegacy(false);
+                  } else {
+                    setSelectedId(n.id);
+                    setShowDetails(true);
+                  }
+                }}
+              >
+                View details
+              </button>
+
             </div>
           ))
         )}
