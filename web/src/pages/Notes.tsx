@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { api } from "../api/client";
 import { Guard } from "../components/Guard";
 import NoteDetails from "../components/NoteDetails";
+import SessionInspector from "../components/SessionInspector";
+import { clearToken } from "../auth/token";
+
 
 
 type Note = { id: number; title: string; body: string; tenant_id: number; owner_user_id: number };
@@ -35,6 +38,14 @@ export default function Notes() {
 
   return (
     <Guard>
+      <SessionInspector
+        onLogout={() => {
+          clearToken();
+          // optional: force UI change by reloading or routing; simplest:
+          window.location.reload();
+        }}
+      />
+
       <div className="card">
         <h2>Notes</h2>
 
