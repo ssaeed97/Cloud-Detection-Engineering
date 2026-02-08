@@ -19,9 +19,9 @@ It is **not** intended to be a production-ready SaaS.
 │ React UI   │ ───────────────────▶ │ FastAPI API  │
 │ (Vite)     │                      │ (Python)     │
 └────────────┘                      └──────────────┘
-       │                                      │
-       │ JWT (Authorization header)           │
-       │                                      ▼
+       │                                     │
+       │ JWT (Authorization header)          │
+       │                                     ▼
        │                            Structured JSON logs
        │                            (auth, authz, errors)
 ```
