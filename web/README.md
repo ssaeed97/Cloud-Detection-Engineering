@@ -152,13 +152,3 @@ It intentionally favors:
 MIT
 
 ---
-
-## Why this README works well
-
-- Clearly states **intent** (huge for reviewers)
-- Explains **security tradeoffs explicitly**
-- Documents `useLegacy` so it doesn't look suspicious
-- Shows you understand frontend auth risks
-- Easy for someone to run locally in under 5 minutes
-
----
