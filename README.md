@@ -86,9 +86,9 @@ Run the container
 docker run --rm -p 8000:8000 -e JWT_SECRET="dev-change-me" cdl-backend
 ```
 
-If you want to bootstrap the admin while running, use the following command
+If you want to bootstrap the admin while running, use the following command, no default admin exists
 ```python
-docker run --rm -p 8000:8000 -e JWT_SECRET=dev-change-me -e BOOTSTRAP_ADMIN_EMAIL=admin@example.com -e BOOTSTRAP_ADMIN_PASSWORD=AdminPass123! cdl-backend
+docker run --rm -p 8000:8000 -e JWT_SECRET=dev-change-me -e BOOTSTRAP_ADMIN_EMAIL=admin@bootstrap.com -e BOOTSTRAP_ADMIN_PASSWORD=admin1234 cdl-backend
 ```
 
 
