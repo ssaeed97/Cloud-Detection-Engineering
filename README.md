@@ -70,6 +70,33 @@ The backend is intentionally simple, but:
 
 See `app/README.md` for full backend setup.
 
+## Running with Docker (Backend Only)
+s
+Build the backend container:
+
+
+```python
+cd app
+docker build -t cdl-backend -f app/Dockerfile app
+```
+
+Run the container
+
+```python
+docker run --rm -p 8000:8000 -e JWT_SECRET="dev-change-me" cdl-backend
+```
+
+If you want to bootstrap the admin while running, use the following command
+```python
+docker run --rm -p 8000:8000 -e JWT_SECRET=dev-change-me -e BOOTSTRAP_ADMIN_EMAIL=admin@example.com -e BOOTSTRAP_ADMIN_PASSWORD=AdminPass123! cdl-backend
+```
+
+
+The API will be available at:
+http://localhost:8000
+
+Logs are emitted as structured JSON to stdout.
+
 ## Frontend Overview (React)
 
 The frontend is a thin UI layer built to:
