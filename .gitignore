@@ -32,7 +32,9 @@ dist/
 build/
 .vite/
 
+####################################
 # local env files
+####################################
 web/.env
 web/.env.local
 web/.env.development
@@ -44,6 +46,7 @@ web/.env.production
 .terraform/
 terraform.tfstate
 terraform.tfstate.backup
+
 ####################################
 # Logs
 ####################################
